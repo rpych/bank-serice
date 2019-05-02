@@ -1,9 +1,13 @@
 package ice_bank.bank_system.bank;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 import Ice.Current;
 import clientOperations._AccountDisp;
+import clientOperations._PremiumAccountDisp;
+import clientOperations.currency;
 
 public class StandardAccountI extends _AccountDisp {
 
@@ -12,18 +16,20 @@ public class StandardAccountI extends _AccountDisp {
 	String PESEL;
 	double income;
 	boolean isPremiumClientAccount = false;
+	List<currency> availableCurrencies = new LinkedList<currency>();
 	
 	
 	public StandardAccountI() {}
 	
 	
 
-	public StandardAccountI(String name, String surname, String pESEL, double income) {
+	public StandardAccountI(String name, String surname, String pESEL, double income, List<currency> availableCurrencies) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		PESEL = pESEL;
 		this.income = income;
+		this.availableCurrencies = availableCurrencies;
 	}
 
 

@@ -1,5 +1,7 @@
 package ice_bank.bank_system.bank;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import Ice.Current;
@@ -9,11 +11,13 @@ import clientOperations.AccountPrxHelper;
 import clientOperations.PremiumAccountPrxHelper;
 import clientOperations.UserAccountNotFoundException;
 import clientOperations._ClientAccountFactoryDisp;
+import clientOperations.currency;
 
 public class ClientAccountFactoryI extends _ClientAccountFactoryDisp {
 
 	Map<String, AccountPrx> clientsAccounts = new HashMap<String, AccountPrx>(); //proxies of clients
 	double minPremiumIncomeValue;
+	public List<currency> availableCurrencies = new LinkedList<currency>();
 	
 	
 	
@@ -24,14 +28,17 @@ public class ClientAccountFactoryI extends _ClientAccountFactoryDisp {
 
 	public AccountPrx registerIntoBankService(String name, String surname, String PESEL, double income,
 			Current __current) {
+		AccountPrx proxy;
 		if(income > minPremiumIncomeValue ) {
-			return PremiumAccountPrxHelper.uncheckedCast(__current.adapter.add(new PremiumAccountI(name, surname, PESEL, income, (int) (income + 50000)),
+			proxy = PremiumAccountPrxHelper.uncheckedCast(__current.adapter.add(new PremiumAccountI(name, surname, PESEL, income, (int) (income + 50000), availableCurrencies),
 					new Identity(PESEL, "premium")));
 		}
 		else {
-			return AccountPrxHelper.uncheckedCast(__current.adapter.add(new StandardAccountI(name, surname, PESEL, income),
+			proxy = AccountPrxHelper.uncheckedCast(__current.adapter.add(new StandardAccountI(name, surname, PESEL, income, availableCurrencies),
 					new Identity(PESEL, "standard")));
 		}
+		clientsAccounts.put(PESEL, proxy);
+		return proxy;
 	}
 
 	public AccountPrx getClientAccount(String PESEL, Current __current) throws UserAccountNotFoundException {
@@ -39,6 +46,8 @@ public class ClientAccountFactoryI extends _ClientAccountFactoryDisp {
 		return clientsAccounts.get(PESEL);
 	}
 
-	
+	public void setAvailableCurrencies(List<currency> availableCurrencies) {
+		this.availableCurrencies = availableCurrencies;
+	}
 
 }

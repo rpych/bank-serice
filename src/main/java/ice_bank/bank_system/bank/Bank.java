@@ -24,7 +24,7 @@ public class Bank {
 			Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Adapter1", "tcp -h localhost -p 10000:udp -h localhost -p 10000");
 
 			// 3. Stworzenie serwanta/serwant�w
-			ClientAccountFactoryI clientConfigServant = new ClientAccountFactoryI(100000);
+			ClientAccountFactoryI clientConfigServant = new ClientAccountFactoryI(10000);
 			//StandardAccountI accountServant = new StandardAccountI();
 			
 						    

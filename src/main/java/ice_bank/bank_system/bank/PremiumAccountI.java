@@ -1,4 +1,6 @@
 package ice_bank.bank_system.bank;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import Ice.Current;
@@ -13,11 +15,12 @@ public class PremiumAccountI extends _PremiumAccountDisp{
 	double income;
 	boolean isPremiumClientAccount = false;
 	int creditMaxBoundary;
+	List<currency> availableCurrencies = new LinkedList<currency>();
 
 	
 	
 	public PremiumAccountI(String name, String surname, String pESEL, double income,
-			int creditMaxBoundary) {
+			int creditMaxBoundary, List<currency> availableCurrencies) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -25,6 +28,7 @@ public class PremiumAccountI extends _PremiumAccountDisp{
 		this.income = income;
 		this.isPremiumClientAccount = true;
 		this.creditMaxBoundary = creditMaxBoundary;
+		this.availableCurrencies = availableCurrencies;
 	}
 
 	public boolean isClientAllowedToGetCredit(int amount, currency curr, float period, Current __current) {
@@ -40,7 +44,7 @@ public class PremiumAccountI extends _PremiumAccountDisp{
 	}
 
 	public String getAccountInfo(Current __current) {
-		String info = "Personal data: " + 
+		String info = "Personal data of PREMIUM account owner: " + 
 				name + " " + surname + ", PESEL = " + PESEL + ", your current income = "
 				+ income;
 			return info;
