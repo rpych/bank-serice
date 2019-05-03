@@ -27,10 +27,10 @@ public class ClientApp
 	PremiumAccountPrx premiumClientProxy;
 	private String accessKey;
 	
-	public ClientApp(String[] args) {
+	public ClientApp(String[] args, String settings) {
 		int status = 0;
 	    communicator = Ice.Util.initialize(args);
-		base = communicator.stringToProxy("config/bank:tcp -h localhost -p 10000:udp -h localhost -p 10000");
+		base = communicator.stringToProxy(settings);
 	}
 	
 	
@@ -62,15 +62,12 @@ public class ClientApp
 		
 		String choice = "";
 		java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-		System.out.print("\nEnter your personal data in proper manner:\n "
+		System.out.print("\nEnter your personal data in proper manner:\n"
 				+ "name#surname#PESEL#monthly income\n"
 				+ ">>>");
 		
-		
 		choice = in.readLine();
-		
 		String[] data = choice.split("#");
-		System.out.println(data[0] + "," + data[1]+ "," +  data[2]+ "," +  data[3]);
 		
 		clientProxy = clientAccountFactory.registerIntoBankService(data[0], data[1], data[2], Double.parseDouble(data[3]));
 		
@@ -78,8 +75,6 @@ public class ClientApp
 		boolean r = clientProxy.ice_isA("::clientOperations::PremiumAccount");
 		System.out.println("Acces key = " + accessKey );
 		serveClientAccount();
-		
-		
 	}
 	
 	public void serveClientAccount() throws IOException {
@@ -132,7 +127,7 @@ public class ClientApp
 	public void applyForCredit() throws IOException {
 		String choice = "";
 		java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-		System.out.print("\nEnter credit data in proper manner to check operation is possible:\n "
+		System.out.print("\nEnter credit data in proper manner to check operation is possible:\n"
 				+ "amount#currency#period in years\n"
 				+ ">>>>>");
 		choice = in.readLine();
@@ -145,7 +140,7 @@ public class ClientApp
 		}
 		double ncost = premiumClientProxy.getCreditCostInNativeCurrency(Integer.parseInt(data[0]), curr, Float.parseFloat(data[2]));
 		double fcost = premiumClientProxy.getCreditCostInForeignCurrency(Integer.parseInt(data[0]), curr, Float.parseFloat(data[2]));
-		System.out.println("Credit costs in native currency = " + ncost + " and foreign currency = " + fcost);
+		System.out.println("Yearly credit costs in native currency = " + ncost + " and foreign currency = " + fcost);
 	}
 	
 	public void logIntoAccount() throws IOException, UserAccountNotFoundException {
@@ -170,7 +165,8 @@ public class ClientApp
 	
     public static void main( String[] args )
     {
-    	ClientApp client = new ClientApp(args);
+    	String settings = "config1/bank1:tcp -h localhost -p 10001:udp -h localhost -p 10001";
+    	ClientApp client = new ClientApp(args, settings);
     	try {
 			
 			client.runClientService();

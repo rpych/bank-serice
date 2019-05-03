@@ -42,11 +42,11 @@ public class PremiumAccountI extends _PremiumAccountDisp{
 	}
 
 	public double getCreditCostInNativeCurrency(int amount, currency curr, float period, Current __current) {
-		return amount;
+		return amount / period;
 	}
 
 	public double getCreditCostInForeignCurrency(int amount, currency curr, float period, Current __current) {
-			return amount / availableCurrencies.get(curr);
+			return amount / (availableCurrencies.get(curr) * period);
 	}
 
 	public String getAccountInfo(Current __current) {
