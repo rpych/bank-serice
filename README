@@ -1,0 +1,5 @@
+ //to generate files from .proto file use
+ protoc --plugin=protoc-gen-java_rpc=./protoc-gen-grpc-java-1.20.0-linux-x86_64 --java_rpc_out=generated-proto/ --java_out=generated-proto/ stock.proto
+
+ //to generate files for ICE library use:
+ slice2java --output-dir generated slice/calculator.ice
