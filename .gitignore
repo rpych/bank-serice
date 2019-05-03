@@ -3,3 +3,7 @@
 .project
 .classpath
 protoc-gen-grpc-java-1.20.0-linux-x86_64
+.idea/
+bank-system.iml
+generated-proto/
+protoc-3.7.1-linux-x86_64.zip
