@@ -6,7 +6,7 @@ import Ice.Identity;
 public class Bank {
 	
 	
-	public void runBankSerice(String[] args)
+	public void runBankService(String[] args)
 	{
 		int status = 0;
 		Ice.Communicator communicator = null;
@@ -67,6 +67,6 @@ public class Bank {
 	public static void main(String[] args)
 	{
 		Bank app = new Bank();
-		app.runBankSerice(args);
+		app.runBankService(args);
 	}
 }

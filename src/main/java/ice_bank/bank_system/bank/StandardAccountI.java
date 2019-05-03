@@ -1,6 +1,8 @@
 package ice_bank.bank_system.bank;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -15,15 +17,14 @@ public class StandardAccountI extends _AccountDisp {
 	String surname;
 	String PESEL;
 	double income;
-	boolean isPremiumClientAccount = false;
-	List<currency> availableCurrencies = new LinkedList<currency>();
+	Map<currency, Double> availableCurrencies = new HashMap<currency, Double>();
 	
 	
 	public StandardAccountI() {}
 	
 	
 
-	public StandardAccountI(String name, String surname, String pESEL, double income, List<currency> availableCurrencies) {
+	public StandardAccountI(String name, String surname, String pESEL, double income, Map<currency, Double> availableCurrencies) {
 		super();
 		this.name = name;
 		this.surname = surname;

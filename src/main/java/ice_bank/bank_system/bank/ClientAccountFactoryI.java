@@ -17,8 +17,14 @@ public class ClientAccountFactoryI extends _ClientAccountFactoryDisp {
 
 	Map<String, AccountPrx> clientsAccounts = new HashMap<String, AccountPrx>(); //proxies of clients
 	double minPremiumIncomeValue;
-	public List<currency> availableCurrencies = new LinkedList<currency>();
-	
+	public static Map<currency, Double> availableCurrencies = new HashMap<currency, Double>();
+	static {
+		availableCurrencies.put(currency.PLN, 0.0);
+		availableCurrencies.put(currency.EUR, 0.0);
+		availableCurrencies.put(currency.CHF, 0.0);
+		availableCurrencies.put(currency.USD, 0.0);
+		availableCurrencies.put(currency.GBP, 0.0);
+	}
 	
 	
 	public ClientAccountFactoryI(double minPremiumIncomeValue) {
@@ -44,10 +50,6 @@ public class ClientAccountFactoryI extends _ClientAccountFactoryDisp {
 	public AccountPrx getClientAccount(String PESEL, Current __current) throws UserAccountNotFoundException {
 		String accessKey = __current.ctx.get(PESEL);
 		return clientsAccounts.get(PESEL);
-	}
-
-	public void setAvailableCurrencies(List<currency> availableCurrencies) {
-		this.availableCurrencies = availableCurrencies;
 	}
 
 }
