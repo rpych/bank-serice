@@ -76,7 +76,7 @@ public class ClientApp
 		
 		accessKey = clientProxy.getAccessKey();
 		boolean r = clientProxy.ice_isA("::clientOperations::PremiumAccount");
-		System.out.println("key = " + accessKey + ", r = " + r);
+		System.out.println("Acces key = " + accessKey );
 		serveClientAccount();
 		
 		
